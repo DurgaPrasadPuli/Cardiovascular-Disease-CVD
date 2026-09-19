@@ -139,13 +139,23 @@ def plot_max_heart_rate_vs_cvd(df: pd.DataFrame, out_dir: Path) -> None:
     plt.close(fig)
 
 
+def plot_oldpeak_vs_cvd(df: pd.DataFrame, out_dir: Path) -> None:
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.boxplot(x="target", y="oldpeak", hue="target", data=df, palette="Set3", legend=False, ax=ax)
+    ax.set_title("ST Depression (oldpeak) vs CVD")
+    ax.set_xlabel("CVD (0 = No, 1 = Yes)")
+    ax.set_ylabel("ST Depression Induced by Exercise")
+    fig.savefig(out_dir / "07_oldpeak_vs_cvd.png")
+    plt.close(fig)
+
+
 def plot_thalassemia_vs_cvd(df: pd.DataFrame, out_dir: Path) -> None:
     fig, ax = plt.subplots(figsize=(8, 6))
     sns.countplot(x="thal", hue="target", data=df, palette="Set1", ax=ax)
     ax.set_title("Thalassemia Distribution vs CVD")
     ax.set_xlabel("Thalassemia Type")
     ax.set_ylabel("Count")
-    fig.savefig(out_dir / "07_thalassemia_vs_cvd.png")
+    fig.savefig(out_dir / "08_thalassemia_vs_cvd.png")
     plt.close(fig)
 
 
@@ -165,14 +175,14 @@ def plot_other_factors_vs_cvd(df: pd.DataFrame, out_dir: Path) -> None:
     axes[1, 1].set_title("Number of Major Vessels vs CVD")
 
     fig.tight_layout()
-    fig.savefig(out_dir / "08_other_factors_vs_cvd.png")
+    fig.savefig(out_dir / "09_other_factors_vs_cvd.png")
     plt.close(fig)
 
 
 def plot_pairplot(df: pd.DataFrame, out_dir: Path) -> None:
     grid = sns.pairplot(df, hue="target", palette="Set1")
     grid.fig.suptitle("Pair Plot of Variables with CVD Highlighted", y=1.02)
-    grid.savefig(out_dir / "09_pairplot.png")
+    grid.savefig(out_dir / "10_pairplot.png")
     plt.close(grid.fig)
 
 
@@ -183,6 +193,7 @@ def run_eda(df: pd.DataFrame, out_dir: Path) -> None:
     plot_resting_bp_vs_cvd(df, out_dir)
     plot_cholesterol_vs_cvd(df, out_dir)
     plot_max_heart_rate_vs_cvd(df, out_dir)
+    plot_oldpeak_vs_cvd(df, out_dir)
     plot_thalassemia_vs_cvd(df, out_dir)
     plot_other_factors_vs_cvd(df, out_dir)
     plot_pairplot(df, out_dir)
